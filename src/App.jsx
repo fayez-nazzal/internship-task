@@ -12,9 +12,7 @@ const theme = createMuiTheme({
 });
 
 function App() {
-  return (
-    <ThemeProvider theme={theme}>Just the overall structure...</ThemeProvider>
-  );
+  return <ThemeProvider theme={theme}></ThemeProvider>;
 }
 
 export default App;
