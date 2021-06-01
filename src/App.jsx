@@ -28,7 +28,6 @@ const ChartContainer = styled.div`
 
 function App() {
   const currentChart = useSelector((state) => state.currentChart);
-
   return (
     <ThemeProvider theme={theme}>
       <Box textAlign="center" aria-label="chart button group">

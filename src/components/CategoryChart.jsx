@@ -9,26 +9,35 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-
-import { getCategoryData } from '../utils/salesUtils';
+import worker from 'workerize-loader!./salesWorker';
+import { Typography } from '@material-ui/core';
+const workerInstance = worker();
 
 const CategoryChart = () => {
-  const [categoriesData, setCategoriesData] = useState([]);
+  const [workerResult, setWorkerResult] = useState(null);
 
   useLayoutEffect(() => {
-    setCategoriesData(getCategoryData(new Date('June 7, 2020')));
+    const onWorker = ({ data }) => {
+      console.log(data);
+      data.length && setWorkerResult(data);
+    };
+
+    workerInstance.addEventListener('message', onWorker);
+    workerInstance.workCategory(new Date('June 7, 2020'));
+
+    return () => {
+      workerInstance.removeEventListener('message', onWorker);
+    };
   }, []);
 
-  useEffect(() => {
-    console.log(categoriesData);
-  }, [categoriesData]);
-
-  return (
+  return !workerResult ? (
+    <Typography variant="h4">Loading Chart Data</Typography>
+  ) : (
     <ResponsiveContainer width="100%" height="100%">
       <BC
         width={700}
         height={480}
-        data={categoriesData}
+        data={workerResult}
         margin={{
           top: 20,
           right: 20,

@@ -38,8 +38,8 @@ const BranchesGeo = () => {
   useLayoutEffect(() => {
     const getData = async () => {
       const totalSalesRet = getTotalSalesData(
-        new Date('May 1, 2015'),
         new Date('May 1, 2020'),
+        new Date(),
       );
       const branchSalesData = totalSalesRet.data;
       breakPoints.current = totalSalesRet.breakPoints;

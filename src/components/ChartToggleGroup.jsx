@@ -6,11 +6,12 @@ import styled from 'styled-components';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 
 const StyledToggleButton = styled(ToggleButton)`
-  background-color: #4cc9f0 !important;
+  background-color: ${(props) =>
+    props.active ? '#4895ef !important' : '#4cc9f0 !important'};
 
-  &:hover,
-  &:focus {
-    background-color: #4895ef !important;
+  &:hover {
+    background-color: ${(props) =>
+      props.active ? '#4895ef !important' : '#39a9cb !important;'};
   }
 `;
 
@@ -24,17 +25,29 @@ const ChartToggleGroup = () => {
 
   return (
     <ToggleButtonGroup exclusive value={currentChart} onChange={handleChange}>
-      <StyledToggleButton value="goods" aria-label="Unique goods sales">
+      <StyledToggleButton
+        active={currentChart === 'goods'}
+        value="goods"
+        aria-label="Unique goods sales"
+      >
         <Typography component="h3" variant="h5">
           Unique goods sales
         </Typography>
       </StyledToggleButton>
-      <StyledToggleButton value="category" aria-label="Category sales">
+      <StyledToggleButton
+        active={currentChart === 'category'}
+        value="category"
+        aria-label="Category sales"
+      >
         <Typography component="h3" variant="h5">
           Category sales
         </Typography>
       </StyledToggleButton>
-      <StyledToggleButton value="map" aria-label="Total Sales">
+      <StyledToggleButton
+        active={currentChart === 'map'}
+        value="map"
+        aria-label="Total Sales"
+      >
         <Typography component="h3" variant="h5">
           Branches map
         </Typography>
