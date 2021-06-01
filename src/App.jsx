@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import UniqueGoodsChart from './components/UniqueGoodsChart';
 import CategoryChart from './components/CategoryChart';
 import BranchesGeo from './components/BranchesGeo';
-import UniqueGoodsFilters from './components/UniqueGoodsFilters';
+import UniqueGoodsDateFilters from './components/UniqueGoodsDateFilters';
 
 const theme = createMuiTheme({
   palette: {
@@ -44,7 +44,7 @@ function App() {
         </Typography>
         <ChartToggleGroup />
         <AnalyticContainer>
-          {(currentChart === 'goods' && <UniqueGoodsFilters />) ||
+          {(currentChart === 'goods' && <UniqueGoodsDateFilters />) ||
             (currentChart === 'category' && <CategoryChart />) ||
             (currentChart === 'map' && <BranchesGeo />)}
           <ChartContainer>
