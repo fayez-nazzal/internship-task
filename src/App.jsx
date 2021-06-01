@@ -1,8 +1,6 @@
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import BarChart from './components/BarChart';
-import { getCategoryData } from './utils/salesUtils';
-
-getCategoryData(new Date('May 31, 2013'), new Date());
+import BranchesGeo from './components/BranchesGeo';
+import './App.css';
 
 const theme = createMuiTheme({
   palette: {
@@ -19,7 +17,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div style={{ width: 800, height: 800 }}>
-        <BarChart />
+        <BranchesGeo />
       </div>
     </ThemeProvider>
   );

@@ -5,7 +5,7 @@ module.exports = {
     node: true,
     'jest/globals': true,
   },
-  extends: ['plugin:react/recommended', 'airbnb'],
+  extends: ['plugin:react/recommended'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -23,5 +23,8 @@ module.exports = {
     'jest/valid-expect': 'error',
     'object-curly-newline': [0],
     'no-bitwise': [0],
+    'prefer-destructuring': [0],
+    'no-await-in-loop': [0],
+    'react/prop-types': [0],
   },
 };

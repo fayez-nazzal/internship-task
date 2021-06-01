@@ -75,4 +75,43 @@ export const getCategoryData = (date) => {
   return categoriesData;
 };
 
+export const getTotalSalesData = (startDate, endDate) => {
+  const branches = [];
+  let breakPoints = [];
+  let highestSales = -1;
+
+  salesData.forEach((sale) => {
+    const saleDate = parse(sale.createdOn, 'MMMM d, y p', new Date());
+
+    // if this sale was in the specefied date range, add it to the total sales of that branch
+    if (saleDate && startDate && endDate) {
+      branches.push({
+        name: sale.branch.name,
+        city: sale.branch.city,
+        createdOn: sale.createdOn,
+        sales: 0,
+      });
+    }
+
+    sale.items.forEach((item) => {
+      branches[branches.length - 1].sales += item.price * item.count;
+    });
+
+    if (branches[branches.length - 1].sales > highestSales)
+      highestSales = branches[branches.length - 1].sales;
+  });
+
+  breakPoints = [
+    highestSales / 4,
+    highestSales / 3,
+    highestSales / 2,
+    highestSales,
+  ];
+
+  return {
+    data: branches,
+    breakPoints,
+  };
+};
+
 export default null;
