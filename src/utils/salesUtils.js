@@ -42,4 +42,37 @@ export const getUniqueGoodsData = (startDate, endDate) => {
   };
 };
 
+export const getCategoryData = (date) => {
+  const categoriesData = [];
+
+  salesData.forEach((sale) => {
+    const saleDate = parse(sale.createdOn, 'MMMM d, y p', new Date());
+    sale.items.forEach((item) => {
+      const categoryName = item.category.replace('Goods', '').trim();
+      const categoryDataIndex = categoriesData.findIndex(
+        (categData) => categData.name === categoryName,
+      );
+
+      if (categoryDataIndex === -1) {
+        categoriesData.push({
+          name: categoryName,
+          sales: 0,
+        });
+      }
+
+      if (isSameDay(saleDate, date)) {
+        categoriesData[categoryDataIndex].sales += item.count;
+      }
+    });
+  });
+
+  const otherIndex = categoriesData.findIndex(
+    (category) => category.name === 'Other',
+  );
+  const otherCategory = categoriesData.splice(otherIndex, 1)[0];
+  categoriesData.push(otherCategory);
+
+  return categoriesData;
+};
+
 export default null;
