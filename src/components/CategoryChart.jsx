@@ -12,7 +12,7 @@ import {
 
 import { getCategoryData } from '../utils/salesUtils';
 
-const BarChart = () => {
+const CategoryChart = () => {
   const [categoriesData, setCategoriesData] = useState([]);
 
   useLayoutEffect(() => {
@@ -47,4 +47,4 @@ const BarChart = () => {
   );
 };
 
-export default BarChart;
+export default CategoryChart;

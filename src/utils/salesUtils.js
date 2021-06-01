@@ -94,7 +94,7 @@ export const getTotalSalesData = (startDate, endDate) => {
     }
 
     sale.items.forEach((item) => {
-      branches[branches.length - 1].sales += item.price * item.count;
+      branches[branches.length - 1].sales += item.count;
     });
 
     if (branches[branches.length - 1].sales > highestSales)

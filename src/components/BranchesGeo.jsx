@@ -46,6 +46,10 @@ const BranchesGeo = () => {
       breakPoints.current = totalSalesRet.breakPoints;
 
       setIsLoading(true);
+
+      // 90% of the latitude and longitude provided by the random data are in the sea
+      // to workaround this, i geocoded the city name to a new latitude and longitude.
+
       for (let index = 0; index < branchSalesData.length; index += 1) {
         const res = await fetch(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${branchSalesData[index].city}.json?access_token=sk.eyJ1IjoiZmF5ZXpuYXp6YWwiLCJhIjoiY2twZGh6MTMxMGc0MzJvbzR6NmVtYTF4eSJ9.dMOnEqdNB7jcHQvLy02b4A`,
@@ -87,7 +91,7 @@ const BranchesGeo = () => {
             <Popup>
               {`${branch.name} - ${branch.city}`}{' '}
               <p style={{ color: '#ff123a' }}>
-                {`Total sales: ${Math.round(branch.sales)}$`}
+                {`Total sales: ${Math.round(branch.sales)}`}
               </p>
             </Popup>
           </Marker>

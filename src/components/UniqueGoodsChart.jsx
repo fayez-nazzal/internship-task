@@ -12,7 +12,7 @@ import {
 import stc from 'string-to-color';
 import { getUniqueGoodsData } from '../utils/salesUtils';
 
-const CombinedChart = () => {
+const UniqueGoodsChart = () => {
   const [daysData, setDaysData] = useState([]);
   const [goods, setGoods] = useState([]);
 
@@ -43,22 +43,20 @@ const CombinedChart = () => {
         <YAxis />
         <Tooltip />
         <Legend />
-        {goods.map((good) => {
-          console.log(good);
-          return (
-            <Line
-              type="linear"
-              connectNulls
-              dataKey={good}
-              stroke={stc(good)}
-              strokeWidth={1}
-              animationDuration={3000}
-            />
-          );
-        })}
+        {goods.map((good) => (
+          <Line
+            key={good}
+            type="linear"
+            connectNulls
+            dataKey={good}
+            stroke={stc(good)}
+            strokeWidth={1}
+            animationDuration={3000}
+          />
+        ))}
       </ComposedChart>
     </ResponsiveContainer>
   );
 };
 
-export default CombinedChart;
+export default UniqueGoodsChart;
