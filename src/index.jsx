@@ -4,12 +4,16 @@ import { Provider as ReduxProvider } from 'react-redux';
 import store from './redux/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReduxProvider store={store}>
-      <App />
-    </ReduxProvider>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <ReduxProvider store={store}>
+        <App />
+      </ReduxProvider>
+    </MuiPickersUtilsProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

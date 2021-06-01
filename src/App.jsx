@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import UniqueGoodsChart from './components/UniqueGoodsChart';
 import CategoryChart from './components/CategoryChart';
 import BranchesGeo from './components/BranchesGeo';
+import UniqueGoodsFilters from './components/UniqueGoodsFilters';
 
 const theme = createMuiTheme({
   palette: {
@@ -21,9 +22,13 @@ const theme = createMuiTheme({
 });
 
 const ChartContainer = styled.div`
-  width: 1000px;
+  width: 900px;
   height: 480px;
   margin: 0 auto;
+`;
+
+const AnalyticContainer = styled.div`
+  display: flex;
 `;
 
 function App() {
@@ -38,11 +43,16 @@ function App() {
           CMO data analysis tools
         </Typography>
         <ChartToggleGroup />
-        <ChartContainer>
-          {(currentChart === 'goods' && <UniqueGoodsChart />) ||
+        <AnalyticContainer>
+          {(currentChart === 'goods' && <UniqueGoodsFilters />) ||
             (currentChart === 'category' && <CategoryChart />) ||
             (currentChart === 'map' && <BranchesGeo />)}
-        </ChartContainer>
+          <ChartContainer>
+            {(currentChart === 'goods' && <UniqueGoodsChart />) ||
+              (currentChart === 'category' && <CategoryChart />) ||
+              (currentChart === 'map' && <BranchesGeo />)}
+          </ChartContainer>
+        </AnalyticContainer>
       </Box>
     </ThemeProvider>
   );
