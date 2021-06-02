@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import themeReducer from './theme';
 import currentChartReducer from './currentChart';
 import dateFilterOptionReducer from './dateFilterOption';
 import dateFilterPresetReducer from './dateFilterPreset';
@@ -11,6 +12,7 @@ import dateReducer from './date';
 export default configureStore({
   reducer: {
     currentChart: currentChartReducer,
+    theme: themeReducer,
     dateFilterOption: dateFilterOptionReducer,
     dateFilterPreset: dateFilterPresetReducer,
     dateRangeFilter: dateRangeFilterReducer,

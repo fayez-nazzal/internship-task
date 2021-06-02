@@ -49,7 +49,7 @@ const CategoryChart = () => {
   }, [categories, date]);
 
   return !workerResult ? (
-    <Typography variant="h4">Loading Chart Data</Typography>
+    <Typography variant="h5">Loading...</Typography>
   ) : workerResult.length === 0 ? (
     <Typography variant="h4">No sales at the selected date.</Typography>
   ) : (

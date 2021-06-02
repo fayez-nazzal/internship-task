@@ -7,12 +7,14 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 
 const StyledToggleButton = styled(ToggleButton)`
   background-color: ${(props) =>
-    props.active ? '#4895ef !important' : '#4cc9f0 !important'};
+    props.active ? '#4895ef !important' : '#6ca9bb !important'};
 
   &:hover {
     background-color: ${(props) =>
       props.active ? '#4895ef !important' : '#39a9cb !important;'};
   }
+
+  margin-bottom: 0.4rem;
 `;
 
 const ChartToggleGroup = () => {

@@ -72,7 +72,7 @@ const UniqueGoodsChart = () => {
   }, [dateRange.startDate, dateRange.endDate, uniqueGoods]);
 
   return !workerResult ? (
-    <Typography variant="h4">Loading Chart Data</Typography>
+    <Typography variant="h5">Loading...</Typography>
   ) : (
     <ResponsiveLineCanvas
       data={workerResult}

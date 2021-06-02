@@ -4,7 +4,7 @@ import DateRangeFilter from './DateRangeFilter';
 
 const StyledPaper = styled(Paper)`
   padding: 2rem;
-  width: 220px;
+  width: 280px;
 `;
 
 const BranchesGeoLeftOptions = () => {

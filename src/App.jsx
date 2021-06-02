@@ -1,8 +1,9 @@
+import React from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import './App.css';
+import './styles/App.css';
 import ChartToggleGroup from './components/ChartToggleGroup';
 import { useSelector } from 'react-redux';
 import UniqueGoodsChart from './components/UniqueGoodsChart';
@@ -13,17 +14,10 @@ import UniqueGoodsRightOptions from './components/UniqueGoodsRightOptions';
 import CategoryLeftOptions from './components/CategoryLeftOptions';
 import CategoryRightOptions from './components/CategoryRightOptions';
 import BranchesGeoLeftOptions from './components/BranchesGeoLeftOptions';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#4cc9f0',
-    },
-    secondary: {
-      main: '#4895ef',
-    },
-  },
-});
+import { ReactComponent as MarketIcon } from './svg/market.svg';
+import { ReactComponent as Analysis } from './svg/analysis.svg';
+import ThemeToggler from './components/ThemeToggler';
+import { CssBaseline } from '@material-ui/core';
 
 const ChartContainer = styled.div`
   width: 900px;
@@ -36,17 +30,67 @@ const AnalyticContainer = styled.div`
   margin: 2rem 2.8rem;
 `;
 
+const StyledMarketIcon = styled(MarketIcon)`
+  width: 48px;
+  height: 48px;
+  margin: 0 0.4rem;
+`;
+
+const StyledAnalysisIcon = styled(Analysis)`
+  width: 32px;
+  height: 32px;
+  margin: 0 0.5rem;
+`;
+
+const FlexedTypography = styled(Typography)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 function App() {
   const currentChart = useSelector((state) => state.currentChart);
+  const theme = useSelector((state) => state.theme);
+
+  const muiTheme = React.useMemo(
+    () =>
+      createMuiTheme({
+        palette: {
+          type: theme,
+          primary: {
+            main: '#4cc9f0',
+          },
+          secondary: {
+            main: '#4895ef',
+          },
+        },
+        overrides: {
+          MuiCssBaseline: {
+            '@global': {
+              body: {
+                transition: 'background-color 0.3s ease-in-out',
+              },
+            },
+          },
+        },
+      }),
+    [theme],
+  );
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={muiTheme}>
+      <CssBaseline />
       <Box textAlign="center" aria-label="chart button group">
         <Typography component="h1" variant="h2">
+          <StyledMarketIcon />
           Sawa Supermarket
+          <StyledMarketIcon />
         </Typography>
-        <Typography component="h2" variant="h4">
+        <FlexedTypography gutterBottom component="h2" variant="h4">
+          <StyledAnalysisIcon />
           CMO data analysis tools
-        </Typography>
+          <StyledAnalysisIcon />
+        </FlexedTypography>
         <ChartToggleGroup />
         <AnalyticContainer>
           {(currentChart === 'goods' && <UniqueGoodsLeftOptions />) ||
@@ -60,6 +104,7 @@ function App() {
           {(currentChart === 'goods' && <UniqueGoodsRightOptions />) ||
             (currentChart === 'category' && <CategoryRightOptions />)}
         </AnalyticContainer>
+        <ThemeToggler />
       </Box>
     </ThemeProvider>
   );

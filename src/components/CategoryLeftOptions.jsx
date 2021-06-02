@@ -11,7 +11,7 @@ import HighlightedDay from './HighlitedDay';
 
 const StyledPaper = styled(Paper)`
   padding: 2rem;
-  width: 220px;
+  width: 280px;
 `;
 
 const CategoryLeftOptions = () => {
@@ -51,7 +51,7 @@ const CategoryLeftOptions = () => {
         renderDay={renderCustomDay}
       />
       <Typography variant="h6">Chart color:</Typography>
-      <HexColorPicker color={chartColor} onChange={onColorChange} />;
+      <HexColorPicker color={chartColor} onChange={onColorChange} />
     </StyledPaper>
   );
 };

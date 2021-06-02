@@ -7,7 +7,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 
 const StyledToggleButton = styled(ToggleButton)`
   background-color: ${(props) =>
-    props.active ? '#7cb7d0 !important' : '#d8e3e7 !important'};
+    props.active ? '#7cb7d0 !important' : '#7795a0 !important'};
 
   &:hover {
     background-color: ${(props) =>

@@ -11,7 +11,7 @@ import stc from 'string-to-color';
 
 const StyledPaper = styled(Paper)`
   padding: 1rem;
-  width: 240px;
+  width: 280px;
   height: 480px;
   overflow-y: hidden;
   display: flex;
