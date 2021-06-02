@@ -26,6 +26,8 @@ const ChecksContainer = styled.div`
 
 const UniqueGoodsRightOptions = () => {
   const uniqueGoods = useSelector((state) => state.uniqueGoods);
+  const theme = useSelector((state) => state.theme);
+
   const dispatch = useDispatch();
 
   const toggle = (item) => {
@@ -64,7 +66,7 @@ const UniqueGoodsRightOptions = () => {
           Uncheck All
         </Button>
       </div>
-      <ChecksContainer>
+      <ChecksContainer className={`scroll-list-for-${theme}`}>
         {uniqueGoods.map((good) => (
           <FormControlLabel
             control={

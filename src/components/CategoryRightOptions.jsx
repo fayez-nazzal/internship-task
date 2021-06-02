@@ -32,6 +32,8 @@ const ChecksContainer = styled.div`
 const CategoryRightOptions = () => {
   const categories = useSelector((state) => state.categories);
   const chartColor = useSelector((state) => state.chartColor);
+  const theme = useSelector((state) => state.theme);
+
   const dispatch = useDispatch();
 
   const toggle = (category) => {
@@ -70,7 +72,7 @@ const CategoryRightOptions = () => {
           Uncheck All
         </Button>
       </div>
-      <ChecksContainer>
+      <ChecksContainer className={`scroll-list-for-${theme}`}>
         {categories.map((categ) => (
           <FormControlLabel
             control={

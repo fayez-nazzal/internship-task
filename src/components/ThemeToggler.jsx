@@ -37,6 +37,7 @@ const Container = styled.span`
 
 const ThemeToggler = () => {
   const theme = useSelector((state) => state.theme);
+
   const { r, transform, cx, cy, opacity } =
     properties[theme === 'light' ? 'sun' : 'moon'];
   const svgContainerProps = useSpring({
