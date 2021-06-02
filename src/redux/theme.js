@@ -2,9 +2,18 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const Theme = createSlice({
   name: 'theme',
-  initialState: 'dark',
+  initialState:
+    localStorage.getItem('sawa-theme') ||
+    (window.matchMedia('(prefers-color-scheme: light)').matches && 'light') ||
+    'dark',
   reducers: {
-    toggle: (state) => (state === 'light' ? 'dark' : 'light'),
+    toggle: (state) => {
+      const newState = state === 'light' ? 'dark' : 'light';
+
+      localStorage.setItem('sawa-theme', newState);
+
+      return newState;
+    },
   },
 });
 
