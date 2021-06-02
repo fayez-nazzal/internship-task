@@ -18,6 +18,15 @@ import { ReactComponent as MarketIcon } from './svg/market.svg';
 import { ReactComponent as Analysis } from './svg/analysis.svg';
 import ThemeToggler from './components/ThemeToggler';
 import { CssBaseline } from '@material-ui/core';
+import Lottie from 'lottie-react';
+
+import arrowUpLottie from './lotties/arrow-up.json';
+
+const SelectMessageBox = styled(Box)`
+  width: 300px;
+  height: 400px;
+  margin: 0 auto;
+`;
 
 const ChartContainer = styled.div`
   width: 900px;
@@ -99,7 +108,14 @@ function App() {
           <ChartContainer>
             {(currentChart === 'goods' && <UniqueGoodsChart />) ||
               (currentChart === 'category' && <CategoryChart />) ||
-              (currentChart === 'map' && <BranchesGeo />)}
+              (currentChart === 'map' && <BranchesGeo />) || (
+                <SelectMessageBox>
+                  <Lottie animationData={arrowUpLottie} />
+                  <Typography variant="h4">
+                    Select chart type from above
+                  </Typography>
+                </SelectMessageBox>
+              )}
           </ChartContainer>
           {(currentChart === 'goods' && <UniqueGoodsRightOptions />) ||
             (currentChart === 'category' && <CategoryRightOptions />)}
