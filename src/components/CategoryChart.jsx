@@ -1,58 +1,112 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
-import {
-  BarChart as BC,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+import { useLayoutEffect, useState } from 'react';
 import worker from 'workerize-loader!../workers/worker';
 import { Typography } from '@material-ui/core';
-const workerInstance = worker();
+import { setCategories } from '../redux/categories';
+import { useDispatch, useSelector } from 'react-redux';
+import { ResponsiveBar } from '@nivo/bar';
+const categoriesWorkerInstance = worker();
+const salesWorkerInstance = worker();
 
 const CategoryChart = () => {
   const [workerResult, setWorkerResult] = useState(null);
+  const categories = useSelector((state) => state.categories);
+  const chartColor = useSelector((state) => state.chartColor);
+  const date = useSelector((state) => state.date);
+
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
-    const onWorker = ({ data }) => {
+    const onCategoriesWorker = ({ data }) => {
+      data.length !== undefined && dispatch(setCategories(data));
       console.log(data);
-      data.length && setWorkerResult(data);
     };
 
-    workerInstance.addEventListener('message', onWorker);
-    workerInstance.workCategory(new Date('June 7, 2020'));
+    categoriesWorkerInstance.addEventListener('message', onCategoriesWorker);
+    categoriesWorkerInstance.workCategories();
 
     return () => {
-      workerInstance.removeEventListener('message', onWorker);
+      categoriesWorkerInstance.removeEventListener(
+        'message',
+        onCategoriesWorker,
+      );
     };
   }, []);
+
+  useLayoutEffect(() => {
+    const onSalesWorker = ({ data }) => {
+      console.log(data);
+      data.length !== undefined && setWorkerResult(data);
+    };
+
+    salesWorkerInstance.addEventListener('message', onSalesWorker);
+    salesWorkerInstance.workCategoriesSales(new Date(date), categories);
+
+    return () => {
+      salesWorkerInstance.removeEventListener('message', onSalesWorker);
+    };
+  }, [categories, date]);
 
   return !workerResult ? (
     <Typography variant="h4">Loading Chart Data</Typography>
   ) : (
-    <ResponsiveContainer width="100%" height="100%">
-      <BC
-        width={700}
-        height={480}
-        data={workerResult}
-        margin={{
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" fontSize={11} interval={0} />
-        <YAxis dataKey="sales" />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="sales" fill="#8884d8" />
-      </BC>
-    </ResponsiveContainer>
+    <ResponsiveBar
+      data={workerResult}
+      keys={['sales']}
+      indexBy="category"
+      margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+      padding={0.3}
+      valueScale={{ type: 'linear' }}
+      indexScale={{ type: 'band', round: true }}
+      colors={chartColor}
+      axisTop={null}
+      axisRight={null}
+      axisBottom={{
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legend: 'category',
+        legendPosition: 'middle',
+        legendOffset: 32,
+      }}
+      axisLeft={{
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legend: 'sales',
+        legendPosition: 'middle',
+        legendOffset: -40,
+      }}
+      labelSkipWidth={12}
+      labelSkipHeight={12}
+      labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+      legends={[
+        {
+          dataFrom: 'keys',
+          anchor: 'bottom-right',
+          direction: 'column',
+          justify: false,
+          translateX: 120,
+          translateY: 0,
+          itemsSpacing: 2,
+          itemWidth: 100,
+          itemHeight: 20,
+          itemDirection: 'left-to-right',
+          itemOpacity: 0.85,
+          symbolSize: 20,
+          effects: [
+            {
+              on: 'hover',
+              style: {
+                itemOpacity: 1,
+              },
+            },
+          ],
+        },
+      ]}
+      animate={true}
+      motionStiffness={90}
+      motionDamping={15}
+    />
   );
 };
 

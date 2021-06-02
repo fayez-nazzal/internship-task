@@ -59,37 +59,61 @@ export const getUniqueGoodsSalesData = (startDate, endDate, uniqueGoods) => {
   return goodsSalesHArray._list;
 };
 
-export const getCategoryData = (date) => {
-  const categoriesData = [];
+export const getCategories = () => {
+  const categories = new HashArray('category');
 
   salesData.forEach((sale) => {
-    const saleDate = parse(sale.createdOn, 'MMMM d, y p', new Date());
     sale.items.forEach((item) => {
-      const categoryName = item.category.replace('Goods', '').trim();
-      const categoryDataIndex = categoriesData.findIndex(
-        (categData) => categData.name === categoryName,
-      );
-
-      if (categoryDataIndex === -1) {
-        categoriesData.push({
-          name: categoryName,
-          sales: 0,
+      if (!categories.get(item.category)) {
+        categories.add({
+          category: item.category,
         });
-      }
-
-      if (isSameDay(saleDate, date)) {
-        categoriesData[categoryDataIndex].sales += item.count;
       }
     });
   });
 
-  const otherIndex = categoriesData.findIndex(
-    (category) => category.name === 'Other',
-  );
-  const otherCategory = categoriesData.splice(otherIndex, 1)[0];
-  categoriesData.push(otherCategory);
+  return categories._list.map((category) => category.category);
+};
 
-  return categoriesData;
+export const getCategorySalesData = (date, categories) => {
+  const categoriesSalesHArray = new HashArray('category');
+  const filteredCategories = categories.filter((category) => category.checked);
+  const filteredCategoriesHArray = new HashArray('category');
+
+  filteredCategoriesHArray.addAll(
+    filteredCategories.map((category) => ({
+      category: category.name,
+    })),
+  );
+
+  salesData.forEach((sale) => {
+    const saleDate = parse(sale.createdOn, 'MMMM d, y p', new Date());
+
+    if (isSameDay(date, saleDate)) {
+      sale.items.forEach((item) => {
+        if (filteredCategoriesHArray.get(item.category)) {
+          const haCategory = categoriesSalesHArray.get(item.category);
+          if (haCategory) {
+            haCategory.sales += item.count;
+          } else {
+            categoriesSalesHArray.add({
+              category: item.category,
+              sales: item.count,
+            });
+          }
+        }
+      });
+    }
+  });
+
+  const list = categoriesSalesHArray._list;
+  const otherCategoryIndex = list.findIndex(
+    (category) => category.category === 'Other',
+  );
+  const otherCategory = list.splice(otherCategoryIndex, 1)[0];
+  list.push(otherCategory);
+
+  return list;
 };
 
 export const getTotalSalesData = (startDate, endDate) => {

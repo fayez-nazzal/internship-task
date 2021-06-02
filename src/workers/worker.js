@@ -1,5 +1,6 @@
 import {
-  getCategoryData,
+  getCategories,
+  getCategorySalesData,
   getUniqueGoods,
   getUniqueGoodsSalesData,
 } from '../utils/salesUtils';
@@ -16,7 +17,13 @@ export const workGoodsSales = (startDate, endDate, uniqueGoods) => {
   postMessage(sales);
 };
 
-export const workCategory = (date) => {
-  const sales = getCategoryData(date);
+export const workCategories = () => {
+  const categories = getCategories();
+
+  postMessage(categories);
+};
+
+export const workCategoriesSales = (date, categories) => {
+  const sales = getCategorySalesData(date, categories);
   sales && postMessage(sales);
 };

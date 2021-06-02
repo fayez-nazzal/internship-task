@@ -10,6 +10,8 @@ import CategoryChart from './components/CategoryChart';
 import BranchesGeo from './components/BranchesGeo';
 import UniqueGoodsLeftOptions from './components/UniqueGoodsLeftOptions';
 import UniqueGoodsRightOptions from './components/UniqueGoodsRightOptions';
+import CategoryLeftOptions from './components/CategoryLeftOptions';
+import CategoryRightOptions from './components/CategoryRightOptions';
 
 const theme = createMuiTheme({
   palette: {
@@ -46,7 +48,7 @@ function App() {
         <ChartToggleGroup />
         <AnalyticContainer>
           {(currentChart === 'goods' && <UniqueGoodsLeftOptions />) ||
-            (currentChart === 'category' && <CategoryChart />) ||
+            (currentChart === 'category' && <CategoryLeftOptions />) ||
             (currentChart === 'map' && <BranchesGeo />)}
           <ChartContainer>
             {(currentChart === 'goods' && <UniqueGoodsChart />) ||
@@ -54,7 +56,7 @@ function App() {
               (currentChart === 'map' && <BranchesGeo />)}
           </ChartContainer>
           {(currentChart === 'goods' && <UniqueGoodsRightOptions />) ||
-            (currentChart === 'category' && <CategoryChart />) ||
+            (currentChart === 'category' && <CategoryRightOptions />) ||
             (currentChart === 'map' && <BranchesGeo />)}
         </AnalyticContainer>
       </Box>

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const uniqueGoods = createSlice({
-  name: 'uniqueGoods',
+const categories = createSlice({
+  name: 'categoreis',
   initialState: [],
   reducers: {
     set: (_, { payload }) =>
@@ -19,10 +19,10 @@ const uniqueGoods = createSlice({
 });
 
 export const {
-  set: setUniqueGoods,
-  toggle: toggleItem,
-  checkAll: checkAllGoods,
-  uncheckAll: uncheckAllGoods,
-} = uniqueGoods.actions;
+  set: setCategories,
+  toggle: toggleCategory,
+  checkAll: checkAllCategories,
+  uncheckAll: uncheckAllCategories,
+} = categories.actions;
 
-export default uniqueGoods.reducer;
+export default categories.reducer;
