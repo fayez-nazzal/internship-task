@@ -8,6 +8,17 @@ import DatePresetsFilter from './DatePresetsFilter';
 const StyledPaper = styled(Paper)`
   padding: 2rem;
   width: 280px;
+
+  @media only screen and (max-width: 768px) {
+    width: 80vw;
+  }
+`;
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const UniqueGoodsLeftOptions = () => {
@@ -17,13 +28,13 @@ const UniqueGoodsLeftOptions = () => {
     <StyledPaper>
       <Typography variant="h6">Date filter:</Typography>
       <DateToggleGroup />
-      <div>
+      <StyledDiv>
         {dateFilterOption === 'preset' ? (
           <DatePresetsFilter />
         ) : (
           <DateRangeFilter />
         )}
-      </div>
+      </StyledDiv>
     </StyledPaper>
   );
 };

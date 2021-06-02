@@ -35,3 +35,14 @@ body {
   background-color: rgb(201, 201, 201);
   outline: 1px solid slategrey;
 }
+
+@media only screen and (max-width: 768px) {
+  body {
+    overflow: auto;
+  }
+
+  .leaflet-container {
+    margin-top: 1rem;
+    width: 100vw;
+  }
+}

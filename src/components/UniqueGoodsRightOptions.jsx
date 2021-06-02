@@ -17,6 +17,10 @@ const StyledPaper = styled(Paper)`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+
+  @media only screen and (max-width: 768px) {
+    width: 80vw;
+  }
 `;
 
 const ChecksContainer = styled.div`
