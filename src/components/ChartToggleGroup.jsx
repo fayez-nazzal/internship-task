@@ -46,10 +46,19 @@ const ChartToggleGroup = () => {
       <StyledToggleButton
         active={currentChart === 'map'}
         value="map"
-        aria-label="Total Sales"
+        aria-label="Total sales geo map"
       >
         <Typography component="h3" variant="h5">
-          Branches map
+          Branches geo map
+        </Typography>
+      </StyledToggleButton>
+      <StyledToggleButton
+        active={currentChart === 'heat-map'}
+        value="heat-map"
+        aria-label="Total sales heat map"
+      >
+        <Typography component="h3" variant="h5">
+          Branches heat map
         </Typography>
       </StyledToggleButton>
     </ToggleButtonGroup>
