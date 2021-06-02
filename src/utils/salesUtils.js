@@ -155,4 +155,10 @@ export const getTotalSalesData = (startDate, endDate) => {
   };
 };
 
+export const dateHasSales = (date) => {
+  return !!salesData.find((sale) =>
+    isSameDay(parse(sale.createdOn, 'MMMM d, y p', new Date()), date),
+  );
+};
+
 export default null;

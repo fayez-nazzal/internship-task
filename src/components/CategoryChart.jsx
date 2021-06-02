@@ -35,7 +35,7 @@ const CategoryChart = () => {
   useLayoutEffect(() => {
     const onSalesWorker = ({ data }) => {
       console.log(data);
-      data.length !== undefined && setWorkerResult(data);
+      data.length !== undefined && setWorkerResult(data.filter(Boolean));
     };
 
     salesWorkerInstance.addEventListener('message', onSalesWorker);
@@ -48,6 +48,8 @@ const CategoryChart = () => {
 
   return !workerResult ? (
     <Typography variant="h4">Loading Chart Data</Typography>
+  ) : workerResult.length === 0 ? (
+    <Typography variant="h4">No sales at the selected date.</Typography>
   ) : (
     <ResponsiveBar
       data={workerResult}
