@@ -1,7 +1,7 @@
-import { Typography } from '@material-ui/core';
+import { Paper, Typography } from '@material-ui/core';
 import { differenceInDays, format, parseISO } from 'date-fns';
 import { useLayoutEffect, useState } from 'react';
-import { ResponsiveLine } from '@nivo/line';
+import { ResponsiveLineCanvas } from '@nivo/line';
 import worker from 'workerize-loader!../workers/worker';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUniqueGoods } from '../redux/uniqueGoods';
@@ -74,7 +74,7 @@ const UniqueGoodsChart = () => {
   return !workerResult ? (
     <Typography variant="h4">Loading Chart Data</Typography>
   ) : (
-    <ResponsiveLine
+    <ResponsiveLineCanvas
       data={workerResult}
       margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
       xScale={{ type: 'time', min: 'auto', max: 'auto', reverse: 'false' }}
@@ -111,8 +111,42 @@ const UniqueGoodsChart = () => {
       lineWidth={1}
       axisTop={null}
       axisRight={null}
-      enableSlices="x"
       colors={{ scheme: 'paired' }}
+      tooltip={(value) => {
+        console.log(value);
+        return (
+          <Paper
+            style={{
+              padding: '0.8rem',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <div
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  backgroundColor: value.point.serieColor,
+                  display: 'inline-block',
+                  marginRight: '0.2rem',
+                }}
+              />
+              <Typography variant="h6">{value.point.serieId}</Typography>
+            </div>
+            <Typography variant="subtitle1">
+              {format(value.point.data.x, 'MMMM d, y')}
+            </Typography>
+            <Typography variant="subtitle1">
+              {`${value.point.data.y} items sold`}
+            </Typography>
+          </Paper>
+        );
+      }}
       pointSize={6}
       pointBorderColor={{ from: 'serieColor' }}
       pointColor={{ theme: 'background' }}
