@@ -18,7 +18,7 @@ const StyledPaper = styled(Paper)`
   flex-direction: column;
   align-items: stretch;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1000px) {
     width: 80vw;
   }
 `;
@@ -56,7 +56,7 @@ const UniqueGoodsRightOptions = () => {
           color="primary"
           onClick={checkAll}
           style={{
-            margin: '0 0.5rem',
+            margin: '0.8rem 0.5rem',
           }}
         >
           Check All

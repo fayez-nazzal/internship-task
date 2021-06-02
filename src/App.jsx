@@ -33,6 +33,10 @@ const ChartContainer = styled.div`
   height: 480px;
   margin: 0 auto;
 
+  @media only screen and (max-width: 1000px) {
+    width: 600px;
+  }
+
   @media only screen and (max-width: 768px) {
     width: 100vw;
   }
@@ -42,7 +46,7 @@ const AnalyticContainer = styled.div`
   display: flex;
   margin: 2rem 2.8rem;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1000px) {
     flex-direction: column;
     align-items: center;
     margin: 0.8rem;

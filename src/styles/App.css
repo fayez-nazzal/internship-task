@@ -12,7 +12,7 @@ body {
 }
 
 .leaflet-container {
-  width: 1000px;
+  width: 64vw;
   height: 480px;
 }
 
@@ -36,13 +36,12 @@ body {
   outline: 1px solid slategrey;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1000px) {
   body {
     overflow: auto;
   }
 
   .leaflet-container {
     margin-top: 1rem;
-    width: 100vw;
   }
 }

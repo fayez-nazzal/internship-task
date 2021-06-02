@@ -14,6 +14,7 @@ const CategoryChart = () => {
   const categories = useSelector((state) => state.categories);
   const chartColor = useSelector((state) => state.chartColor);
   const date = useSelector((state) => state.date);
+  const theme = useSelector((state) => state.theme);
 
   const dispatch = useDispatch();
 
@@ -54,10 +55,13 @@ const CategoryChart = () => {
     <Typography variant="h4">No sales at the selected date.</Typography>
   ) : (
     <ResponsiveBar
+      theme={{
+        textColor: theme === 'dark' ? '#cccccc' : '#333333',
+      }}
       data={workerResult}
       keys={['sales']}
       indexBy="category"
-      margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+      margin={{ top: 50, right: 130, bottom: 80, left: 60 }}
       padding={0.3}
       valueScale={{ type: 'linear' }}
       indexScale={{ type: 'band', round: true }}
@@ -67,8 +71,7 @@ const CategoryChart = () => {
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,
-        tickRotation: 0,
-        legend: 'category',
+        tickRotation: 28,
         legendPosition: 'middle',
         legendOffset: 32,
       }}

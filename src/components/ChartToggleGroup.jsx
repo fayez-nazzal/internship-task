@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentChart } from '../redux/currentChart';
 import styled from 'styled-components';
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import { useEffect } from 'react';
 
 const StyledToggleButton = styled(ToggleButton)`
   background-color: ${(props) =>
@@ -24,6 +25,18 @@ const ChartToggleGroup = () => {
   const handleChange = (_, newVal) => {
     dispatch(setCurrentChart(newVal));
   };
+
+  useEffect(() => {
+    const onResize = () => {
+      dispatch(setCurrentChart(''));
+    };
+
+    window.addEventListener('resize', onResize);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  });
 
   return (
     <ToggleButtonGroup exclusive value={currentChart} onChange={handleChange}>

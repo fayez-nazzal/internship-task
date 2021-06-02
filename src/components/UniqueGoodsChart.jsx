@@ -38,6 +38,7 @@ const UniqueGoodsChart = () => {
   const [workerResult, setWorkerResult] = useState(null);
   const dateRange = useSelector((state) => state.dateRangeFilter);
   const uniqueGoods = useSelector((state) => state.uniqueGoods);
+  const theme = useSelector((state) => state.theme);
 
   const dispatch = useDispatch();
 
@@ -75,8 +76,11 @@ const UniqueGoodsChart = () => {
     <Typography variant="h5">Loading...</Typography>
   ) : (
     <ResponsiveLineCanvas
+      theme={{
+        textColor: theme === 'dark' ? '#cccccc' : '#333333',
+      }}
       data={workerResult}
-      margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
+      margin={{ top: 50, right: 130, bottom: 80, left: 60 }}
       xScale={{ type: 'time', min: 'auto', max: 'auto', reverse: 'false' }}
       yScale={{
         type: 'point',

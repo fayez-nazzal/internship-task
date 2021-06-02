@@ -9,7 +9,7 @@ const StyledPaper = styled(Paper)`
   padding: 2rem;
   width: 280px;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1000px) {
     width: 80vw;
   }
 `;
