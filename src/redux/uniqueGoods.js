@@ -5,12 +5,13 @@ const dateFilterOptionSlice = createSlice({
   initialState: [],
   reducers: {
     set: (_, { payload }) =>
-      payload.map((good) => ({
-        name: good,
+      payload.map((item) => ({
+        name: item,
         checked: true,
       })),
-    toggleIndex: (state, { payload }) => {
-      state[payload].checked = !state[payload].checked;
+    toggle: (state, { payload }) => {
+      const item = state.find((item) => item.name === payload);
+      item.checked = !item.checked;
     },
     checkAll: (state) => state.map((item) => ({ ...item, checked: true })),
     uncheckAll: (state) => state.map((item) => ({ ...item, checked: false })),
@@ -19,7 +20,7 @@ const dateFilterOptionSlice = createSlice({
 
 export const {
   set: setUniqueGoods,
-  toggleIndex: toggleGoodAtIndex,
+  toggle: toggleItem,
   checkAll: checkAllGoods,
   uncheckAll: uncheckAllGoods,
 } = dateFilterOptionSlice.actions;

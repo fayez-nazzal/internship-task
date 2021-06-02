@@ -1,46 +1,62 @@
-import { add, differenceInDays, format, isSameDay, parse } from 'date-fns';
+import { isSameDay, parse } from 'date-fns';
 import salesData from '../data/sales.json';
+import HashArray from 'hasharray';
+import stc from 'string-to-color';
 
-export const getUniqueGoodsData = (startDate, endDate) => {
-  let currDate = startDate;
-  const daysData = [];
-  const goods = [];
+export const getUniqueGoods = () => {
+  const uniqueGoods = new HashArray('id');
 
-  do {
-    daysData.push({
-      day: currDate,
-      dayStr: format(currDate, 'MMM d, y'),
+  salesData.forEach((sale) => {
+    sale.items.forEach((item) => {
+      if (!uniqueGoods.get(item.name)) {
+        uniqueGoods.add({
+          id: item.name,
+        });
+      }
     });
-    currDate = add(currDate, {
-      days: 1,
-    });
-  } while (!isSameDay(currDate, endDate));
-  currDate = startDate;
+  });
+
+  return uniqueGoods._list.map((item) => item.id);
+};
+
+export const getUniqueGoodsSalesData = (startDate, endDate, uniqueGoods) => {
+  const goodsSalesHArray = new HashArray('id');
+  const filteredGoods = uniqueGoods.filter((item) => item.checked);
+  const filteredGoodsHArray = new HashArray('id');
+
+  filteredGoodsHArray.addAll(
+    filteredGoods.map((item) => ({
+      id: item.name,
+    })),
+  );
 
   salesData.forEach((sale) => {
     const saleDate = parse(sale.createdOn, 'MMMM d, y p', new Date());
-    if (saleDate > currDate) {
-      const dayIndex =
-        Math.abs(differenceInDays(saleDate, currDate)) % daysData.length;
 
-      if (dayIndex !== -1) {
-        sale.items.forEach((item) => {
-          const itemSalesOnDay = daysData[dayIndex][item.name];
-          daysData[dayIndex][item.name] = itemSalesOnDay
-            ? itemSalesOnDay + item.count
-            : item.count;
-          if (!goods.includes(item.name)) {
-            goods.push(item.name);
+    if (saleDate >= startDate && saleDate <= endDate) {
+      sale.items.forEach((item) => {
+        if (filteredGoodsHArray.get(item.name)) {
+          const haItem = goodsSalesHArray.get(item.name);
+          if (haItem) {
+            haItem.data.push({ x: saleDate, y: item.count });
+          } else {
+            goodsSalesHArray.add({
+              id: item.name,
+              color: stc(item.name),
+              data: [
+                {
+                  x: saleDate,
+                  y: item.count,
+                },
+              ],
+            });
           }
-        });
-      }
+        }
+      });
     }
   });
 
-  return {
-    days: daysData,
-    goods,
-  };
+  return goodsSalesHArray._list;
 };
 
 export const getCategoryData = (date) => {

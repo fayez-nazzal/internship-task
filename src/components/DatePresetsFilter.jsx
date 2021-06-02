@@ -23,14 +23,9 @@ const DatePresetsFilter = () => {
         onChange={handleRadioChange}
       >
         <FormControlLabel
-          value="last-7-days"
+          value="last-3-months"
           control={<Radio />}
-          label="Last week"
-        />
-        <FormControlLabel
-          value="last-1-months"
-          control={<Radio />}
-          label="Last month"
+          label="Last 3 months"
         />
         <FormControlLabel
           value="last-6-months"

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Checkbox, Paper, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import {
-  toggleGoodAtIndex,
+  toggleItem,
   checkAllGoods,
   uncheckAllGoods,
 } from '../redux/uniqueGoods';
@@ -28,8 +28,8 @@ const UniqueGoodsCheckFilters = () => {
   const uniqueGoods = useSelector((state) => state.uniqueGoods);
   const dispatch = useDispatch();
 
-  const toggleIndex = (index) => {
-    dispatch(toggleGoodAtIndex(index));
+  const toggle = (item) => {
+    dispatch(toggleItem(item));
   };
 
   const checkAll = () => {
@@ -65,12 +65,12 @@ const UniqueGoodsCheckFilters = () => {
         </Button>
       </div>
       <ChecksContainer>
-        {uniqueGoods.map((good, index) => (
+        {uniqueGoods.map((good) => (
           <FormControlLabel
             control={
               <Checkbox
                 checked={good.checked}
-                onChange={() => toggleIndex(index)}
+                onChange={() => toggle(good.name)}
                 style={{
                   color: stc(good.name),
                 }}

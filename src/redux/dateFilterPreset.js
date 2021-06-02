@@ -21,7 +21,11 @@ export const { set: setDateFilterPreset } = dateFilterPresetSlice.actions;
 export const calculateSubDateFromStr = (str) => ({
   days: str.match(/days/) ? parseInt(str.match(/\d/i)[0], 10) : 0,
   months: str.match(/months/) ? parseInt(str.match(/\d/i)[0], 10) : 0,
-  years: str.match(/years/) ? parseInt(str.match(/\d/i)[0], 10) : 0,
+  years: str.match(/years/)
+    ? parseInt(str.match(/\d/i)[0], 10)
+    : str.match(/all/i)
+    ? 10
+    : 0,
 });
 
 export default dateFilterPresetSlice.reducer;
