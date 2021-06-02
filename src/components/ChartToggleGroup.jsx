@@ -15,7 +15,7 @@ const StyledToggleButton = styled(ToggleButton)`
       props.active ? '#4895ef !important' : '#39a9cb !important;'};
   }
 
-  margin-bottom: 0.4rem;
+  margin: 0.6rem 0;
 `;
 
 const ChartToggleGroup = () => {
