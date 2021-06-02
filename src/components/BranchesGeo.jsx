@@ -23,24 +23,29 @@ const LeafIcon = L.Icon.extend({
   options: {},
 });
 
-// const greyIcon = new LeafIcon({
-//   iconUrl: 'https://pasteboard.co/K4Mgyn8.png',
-// });
+const greyIcon = new LeafIcon({
+  iconUrl: 'https://i.ibb.co/j6wpZVw/grey-dot.png',
+  iconSize: [20, 26],
+});
 
 const blueIcon = new LeafIcon({
-  iconUrl: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+  iconUrl: 'https://i.ibb.co/Qn1trbg/blue-dot.png',
+  iconSize: [22, 26],
 });
 
 const yellowIcon = new LeafIcon({
-  iconUrl: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+  iconUrl: 'https://i.ibb.co/3smDLJz/yellow-dot.png',
+  iconSize: [20, 26],
 });
 
 const orangeIcon = new LeafIcon({
-  iconUrl: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png',
+  iconUrl: 'https://i.ibb.co/WD5rH4v/orange-dot.png',
+  iconSize: [20, 26],
 });
 
 const redIcon = new LeafIcon({
-  iconUrl: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+  iconUrl: 'https://i.ibb.co/SmyJC6L/red-dot.png',
+  iconSize: [20, 26],
 });
 
 const BranchesGeo = () => {
@@ -92,7 +97,10 @@ const BranchesGeo = () => {
   return !workerResult || !workerResult.length ? (
     <Typography variant="h5">Loading...</Typography>
   ) : (
-    <MapContainer center={[workerResult[0].lat, workerResult[0].long]} zoom={3}>
+    <MapContainer
+      center={[workerResult[0].lat + 2, workerResult[0].long + 10]}
+      zoom={4}
+    >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -100,6 +108,7 @@ const BranchesGeo = () => {
       {workerResult.map((branch) => (
         <Marker
           icon={
+            (branch.sales === 0 && greyIcon) ||
             (branch.sales <= breakPoints.current[0] && blueIcon) ||
             (branch.sales <= breakPoints.current[1] && yellowIcon) ||
             (branch.sales <= breakPoints.current[2] && orangeIcon) ||
