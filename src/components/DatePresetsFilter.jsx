@@ -4,9 +4,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { useSelector } from 'react-redux';
 import { setDateFilterPreset } from '../redux/dateFilterPreset';
+import { useDispatch } from 'react-redux';
 
 const DatePresetsFilter = () => {
   const dateFilterPreset = useSelector((state) => state.dateFilterPreset);
+  const dispatch = useDispatch();
 
   const handleRadioChange = (e) => {
     dispatch(setDateFilterPreset(e.target.value));

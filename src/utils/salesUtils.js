@@ -6,7 +6,7 @@ export const getUniqueGoodsData = (startDate, endDate) => {
   const daysData = [];
   const goods = [];
 
-  while (!isSameDay(currDate, endDate)) {
+  do {
     daysData.push({
       day: currDate,
       dayStr: format(currDate, 'MMM d, y'),
@@ -14,13 +14,14 @@ export const getUniqueGoodsData = (startDate, endDate) => {
     currDate = add(currDate, {
       days: 1,
     });
-  }
+  } while (!isSameDay(currDate, endDate));
   currDate = startDate;
 
   salesData.forEach((sale) => {
     const saleDate = parse(sale.createdOn, 'MMMM d, y p', new Date());
     if (saleDate > currDate) {
-      const dayIndex = Math.abs(differenceInDays(saleDate, currDate));
+      const dayIndex =
+        Math.abs(differenceInDays(saleDate, currDate)) % daysData.length;
 
       if (dayIndex !== -1) {
         sale.items.forEach((item) => {

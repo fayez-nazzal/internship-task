@@ -11,31 +11,35 @@ const DateRangeFilter = () => {
   const dispatch = useDispatch();
 
   const handleStartDateChange = (date) => {
-    dispatch(setDateRnageFilterStart(date));
+    dispatch(setDateRnageFilterStart(date.toISOString()));
   };
 
   const handleEndtDateChange = (date) => {
-    dispatch(setDateRnageFilterEnd(date));
+    dispatch(setDateRnageFilterEnd(date.toISOString()));
   };
 
   return (
     <>
       <DatePicker
         label="Start Date"
-        size="large"
+        size="medium"
         inputVariant="outlined"
         value={dateRangeFilter.startDate}
         onChange={handleStartDateChange}
+        format="MMMM d, y"
+        maxDate={dateRangeFilter.endDate}
         style={{
           margin: '0.6rem 0 2rem',
         }}
       />
       <DatePicker
         label="End Date"
-        size="large"
+        size="medium"
         inputVariant="outlined"
         value={dateRangeFilter.endDate}
         onChange={handleEndtDateChange}
+        minDate={dateRangeFilter.startDate}
+        format="MMMM d, y"
       />
     </>
   );

@@ -1,5 +1,5 @@
 import { Typography } from '@material-ui/core';
-import { sub } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { useLayoutEffect, useState } from 'react';
 import {
   ResponsiveContainer,
@@ -20,6 +20,7 @@ const workerInstance = worker();
 const UniqueGoodsChart = () => {
   const [workerResult, setWorkerResult] = useState(null);
   const uniqueGoods = useSelector((state) => state.uniqueGoods);
+  const dateRange = useSelector((state) => state.dateRangeFilter);
 
   const dispatch = useDispatch();
 
@@ -32,16 +33,14 @@ const UniqueGoodsChart = () => {
 
     workerInstance.addEventListener('message', onWorker);
     workerInstance.workGoods(
-      sub(new Date(), {
-        months: 6,
-      }),
-      new Date(),
+      parseISO(dateRange.startDate),
+      parseISO(dateRange.endDate),
     );
 
     return () => {
       workerInstance.removeEventListener('message', onWorker);
     };
-  }, []);
+  }, [dateRange.startDate, dateRange.endDate]);
 
   return !workerResult ? (
     <Typography variant="h4">Loading Chart Data</Typography>
@@ -63,7 +62,7 @@ const UniqueGoodsChart = () => {
                 dataKey={good.name}
                 stroke={stc(good.name)}
                 strokeWidth={1}
-                animationDuration={2600}
+                isAnimationActive={false}
               />
             ),
         )}
