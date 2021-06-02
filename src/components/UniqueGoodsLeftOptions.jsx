@@ -1,7 +1,7 @@
 import { Paper, Typography } from '@material-ui/core';
 import styled from 'styled-components';
 import DateToggleGroup from './DateToggleGroup';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import DateRangeFilter from './DateRangeFilter';
 import DatePresetsFilter from './DatePresetsFilter';
 

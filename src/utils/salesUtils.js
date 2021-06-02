@@ -33,7 +33,10 @@ export const getUniqueGoodsSalesData = (startDate, endDate, uniqueGoods) => {
   salesData.forEach((sale) => {
     const saleDate = parse(sale.createdOn, 'MMMM d, y p', new Date());
 
-    if (saleDate >= startDate && saleDate <= endDate) {
+    if (
+      (saleDate > startDate && saleDate < endDate) ||
+      isSameDay(saleDate, endDate)
+    ) {
       sale.items.forEach((item) => {
         if (filteredGoodsHArray.get(item.name)) {
           const haItem = goodsSalesHArray.get(item.name);
@@ -116,30 +119,52 @@ export const getCategorySalesData = (date, categories) => {
   return list;
 };
 
-export const getTotalSalesData = (startDate, endDate) => {
-  const branches = [];
+export const getBranches = () => {
+  const branches = new HashArray('branch');
+
+  salesData.forEach((sale) => {
+    if (!branches.get(sale.branch.name)) {
+      branches.add({
+        branch: sale.branch.name,
+        city: sale.branch.city,
+        createdOn: parse(sale.createdOn, 'MMMM d, y p', new Date()),
+        sales: 0,
+      });
+    }
+  });
+
+  return branches._list;
+};
+
+export const getBranchesSalesData = (startDate, endDate) => {
+  const allBranches = getBranches();
+  const branches = new HashArray('branch');
   let breakPoints = [];
   let highestSales = -1;
+
+  allBranches.forEach((branch) => {
+    branches.add({ ...branch, sales: 0 });
+  });
 
   salesData.forEach((sale) => {
     const saleDate = parse(sale.createdOn, 'MMMM d, y p', new Date());
 
     // if this sale was in the specefied date range, add it to the total sales of that branch
-    if (saleDate && startDate && endDate) {
-      branches.push({
-        name: sale.branch.name,
-        city: sale.branch.city,
-        createdOn: sale.createdOn,
-        sales: 0,
+    if (
+      (saleDate > startDate && saleDate < endDate) ||
+      isSameDay(saleDate, endDate)
+    ) {
+      let sales = 0;
+
+      sale.items.forEach((item) => {
+        sales += item.count;
       });
+
+      if (sales > highestSales) highestSales = sales;
+
+      const branch = branches.get(sale.branch.name);
+      branch['sales'] += sales;
     }
-
-    sale.items.forEach((item) => {
-      branches[branches.length - 1].sales += item.count;
-    });
-
-    if (branches[branches.length - 1].sales > highestSales)
-      highestSales = branches[branches.length - 1].sales;
   });
 
   breakPoints = [
@@ -150,7 +175,7 @@ export const getTotalSalesData = (startDate, endDate) => {
   ];
 
   return {
-    data: branches,
+    data: branches._list,
     breakPoints,
   };
 };

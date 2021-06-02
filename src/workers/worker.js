@@ -1,4 +1,5 @@
 import {
+  getBranchesSalesData,
   getCategories,
   getCategorySalesData,
   getUniqueGoods,
@@ -26,4 +27,9 @@ export const workCategories = () => {
 export const workCategoriesSales = (date, categories) => {
   const sales = getCategorySalesData(date, categories);
   sales && postMessage(sales);
+};
+
+export const workBranchesSales = (startDate, endDate) => {
+  const branchesSales = getBranchesSalesData(startDate, endDate);
+  branchesSales && postMessage(branchesSales);
 };

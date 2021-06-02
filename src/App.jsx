@@ -12,6 +12,7 @@ import UniqueGoodsLeftOptions from './components/UniqueGoodsLeftOptions';
 import UniqueGoodsRightOptions from './components/UniqueGoodsRightOptions';
 import CategoryLeftOptions from './components/CategoryLeftOptions';
 import CategoryRightOptions from './components/CategoryRightOptions';
+import BranchesGeoLeftOptions from './components/BranchesGeoLeftOptions';
 
 const theme = createMuiTheme({
   palette: {
@@ -32,6 +33,7 @@ const ChartContainer = styled.div`
 
 const AnalyticContainer = styled.div`
   display: flex;
+  margin: 2rem 2.8rem;
 `;
 
 function App() {
@@ -49,15 +51,14 @@ function App() {
         <AnalyticContainer>
           {(currentChart === 'goods' && <UniqueGoodsLeftOptions />) ||
             (currentChart === 'category' && <CategoryLeftOptions />) ||
-            (currentChart === 'map' && <BranchesGeo />)}
+            (currentChart === 'map' && <BranchesGeoLeftOptions />)}
           <ChartContainer>
             {(currentChart === 'goods' && <UniqueGoodsChart />) ||
               (currentChart === 'category' && <CategoryChart />) ||
               (currentChart === 'map' && <BranchesGeo />)}
           </ChartContainer>
           {(currentChart === 'goods' && <UniqueGoodsRightOptions />) ||
-            (currentChart === 'category' && <CategoryRightOptions />) ||
-            (currentChart === 'map' && <BranchesGeo />)}
+            (currentChart === 'category' && <CategoryRightOptions />)}
         </AnalyticContainer>
       </Box>
     </ThemeProvider>

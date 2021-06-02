@@ -1,9 +1,12 @@
 import {
+  getBranches,
+  getBranchesSalesData,
   getCategories,
   getCategorySalesData,
   getUniqueGoods,
   getUniqueGoodsSalesData,
 } from './salesUtils';
+import salesData from '../data/sales.json';
 
 test('gets unique goods', () => {
   const uniqueGoods = getUniqueGoods();
@@ -94,4 +97,33 @@ test('gets categories sales data (filtered)', () => {
   );
 
   expect(data.length).toBe(9);
+});
+
+test('gets branches', () => {
+  const branches = getBranches();
+  expect(branches.length).toBe(100);
+});
+
+test('sales data equal number of branches', () => {
+  const branches = getBranches();
+  expect(branches.length).toBe(salesData.length);
+});
+
+test('gets branches sales data', () => {
+  const branches = getBranchesSalesData(
+    new Date('1 February, 2009'),
+    new Date(),
+  );
+  expect(branches.breakPoints).toBeDefined();
+  expect(branches.data.length).toBe(100);
+});
+
+test('gets branches sales data (small date range)', () => {
+  const branches = getBranchesSalesData(
+    new Date('1 February, 2021'),
+    new Date(),
+  );
+
+  expect(branches.breakPoints).toBeDefined();
+  expect(branches.data.length).toBe(100);
 });

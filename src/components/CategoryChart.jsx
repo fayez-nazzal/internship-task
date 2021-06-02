@@ -4,6 +4,8 @@ import { Typography } from '@material-ui/core';
 import { setCategories } from '../redux/categories';
 import { useDispatch, useSelector } from 'react-redux';
 import { ResponsiveBar } from '@nivo/bar';
+import { parseISO } from 'date-fns/esm';
+
 const categoriesWorkerInstance = worker();
 const salesWorkerInstance = worker();
 
@@ -39,7 +41,7 @@ const CategoryChart = () => {
     };
 
     salesWorkerInstance.addEventListener('message', onSalesWorker);
-    salesWorkerInstance.workCategoriesSales(new Date(date), categories);
+    salesWorkerInstance.workCategoriesSales(parseISO(date), categories);
 
     return () => {
       salesWorkerInstance.removeEventListener('message', onSalesWorker);
