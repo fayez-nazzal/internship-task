@@ -9,7 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import worker from 'workerize-loader!./salesWorker';
+import worker from 'workerize-loader!../workers/worker';
 import { Typography } from '@material-ui/core';
 const workerInstance = worker();
 

@@ -10,7 +10,7 @@ const StyledPaper = styled(Paper)`
   width: 220px;
 `;
 
-const UniqueGoodsDateFilters = () => {
+const UniqueGoodsLeftOptions = () => {
   const dateFilterOption = useSelector((state) => state.dateFilterOption);
 
   return (
@@ -28,4 +28,4 @@ const UniqueGoodsDateFilters = () => {
   );
 };
 
-export default UniqueGoodsDateFilters;
+export default UniqueGoodsLeftOptions;

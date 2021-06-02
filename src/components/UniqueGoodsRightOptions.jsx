@@ -24,7 +24,7 @@ const ChecksContainer = styled.div`
   margin-top: 0.6rem;
 `;
 
-const UniqueGoodsCheckFilters = () => {
+const UniqueGoodsRightOptions = () => {
   const uniqueGoods = useSelector((state) => state.uniqueGoods);
   const dispatch = useDispatch();
 
@@ -86,4 +86,4 @@ const UniqueGoodsCheckFilters = () => {
   );
 };
 
-export default UniqueGoodsCheckFilters;
+export default UniqueGoodsRightOptions;

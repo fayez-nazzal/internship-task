@@ -1,11 +1,10 @@
 import { Typography } from '@material-ui/core';
 import { differenceInDays, format, parseISO } from 'date-fns';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { ResponsiveLine } from '@nivo/line';
-import worker from 'workerize-loader!./salesWorker';
+import worker from 'workerize-loader!../workers/worker';
 import { useDispatch, useSelector } from 'react-redux';
-import uniqueGoods, { setUniqueGoods } from '../redux/uniqueGoods';
-import { workUniqueGoods } from './salesWorker';
+import { setUniqueGoods } from '../redux/uniqueGoods';
 
 const goodsWorkerInstance = worker();
 const salesWorkerInstance = worker();
