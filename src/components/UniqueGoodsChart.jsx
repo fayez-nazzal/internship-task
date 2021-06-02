@@ -13,21 +13,27 @@ import {
 } from 'recharts';
 import stc from 'string-to-color';
 import worker from 'workerize-loader!./salesWorker';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUniqueGoods } from '../redux/uniqueGoods';
 const workerInstance = worker();
 
 const UniqueGoodsChart = () => {
   const [workerResult, setWorkerResult] = useState(null);
+  const uniqueGoods = useSelector((state) => state.uniqueGoods);
+
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     const onWorker = ({ data }) => {
       console.log(data);
       data.days && setWorkerResult(data);
+      data.goods && dispatch(setUniqueGoods(data.goods));
     };
 
     workerInstance.addEventListener('message', onWorker);
     workerInstance.workGoods(
       sub(new Date(), {
-        years: 1,
+        months: 6,
       }),
       new Date(),
     );
@@ -47,18 +53,20 @@ const UniqueGoodsChart = () => {
         <YAxis />
         <Tooltip isAnimationActive={false} />
         <Legend />
-        {workerResult.goods.map((good) => (
-          <Line
-            key={good}
-            type="linear"
-            connectNulls
-            dataKey={good}
-            stroke={stc(good)}
-            strokeWidth={1}
-            h
-            animationDuration={2600}
-          />
-        ))}
+        {uniqueGoods.map(
+          (good) =>
+            good.checked && (
+              <Line
+                key={good.name}
+                type="linear"
+                connectNulls
+                dataKey={good.name}
+                stroke={stc(good.name)}
+                strokeWidth={1}
+                animationDuration={2600}
+              />
+            ),
+        )}
       </ComposedChart>
     </ResponsiveContainer>
   );

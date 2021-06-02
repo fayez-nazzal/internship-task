@@ -9,6 +9,7 @@ import UniqueGoodsChart from './components/UniqueGoodsChart';
 import CategoryChart from './components/CategoryChart';
 import BranchesGeo from './components/BranchesGeo';
 import UniqueGoodsDateFilters from './components/UniqueGoodsDateFilters';
+import UniqueGoodsCheckFilters from './components/UniqueGoodsCheckFilters';
 
 const theme = createMuiTheme({
   palette: {
@@ -52,6 +53,9 @@ function App() {
               (currentChart === 'category' && <CategoryChart />) ||
               (currentChart === 'map' && <BranchesGeo />)}
           </ChartContainer>
+          {(currentChart === 'goods' && <UniqueGoodsCheckFilters />) ||
+            (currentChart === 'category' && <CategoryChart />) ||
+            (currentChart === 'map' && <BranchesGeo />)}
         </AnalyticContainer>
       </Box>
     </ThemeProvider>
