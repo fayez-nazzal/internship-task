@@ -1,4 +1,5 @@
 import { Paper, Typography } from '@material-ui/core';
+import styled from 'styled-components';
 import { differenceInDays, format, parseISO } from 'date-fns';
 import { useLayoutEffect, useState } from 'react';
 import { ResponsiveLineCanvas } from '@nivo/line';
@@ -33,6 +34,24 @@ const getXAxisTimeInterval = (startDate, endDate) => {
 
   return interval;
 };
+
+const PaddedPaper = styled(Paper)`
+  padding: 0.8rem;
+`;
+
+const FlexDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ColorSquare = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: ${(props) => props.color};
+  display: inline-block;
+  margin-right: 0.4rem;
+`;
 
 const UniqueGoodsChart = () => {
   const [workerResult, setWorkerResult] = useState(null);
@@ -117,38 +136,19 @@ const UniqueGoodsChart = () => {
       axisRight={null}
       colors={{ scheme: 'paired' }}
       tooltip={(value) => {
-        console.log(value);
         return (
-          <Paper
-            style={{
-              padding: '0.8rem',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <div
-                style={{
-                  width: '20px',
-                  height: '20px',
-                  backgroundColor: value.point.serieColor,
-                  display: 'inline-block',
-                  marginRight: '0.2rem',
-                }}
-              />
+          <PaddedPaper>
+            <FlexDiv>
+              <ColorSquare color={value.point.serieColor} />
               <Typography variant="h6">{value.point.serieId}</Typography>
-            </div>
+            </FlexDiv>
             <Typography variant="subtitle1">
               {format(value.point.data.x, 'MMMM d, y')}
             </Typography>
             <Typography variant="subtitle1">
               {`${value.point.data.y} items sold`}
             </Typography>
-          </Paper>
+          </PaddedPaper>
         );
       }}
       pointSize={6}
