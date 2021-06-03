@@ -1,6 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
+import styled from 'styled-components';
 import worker from 'workerize-loader!../workers/worker';
-import { Typography } from '@material-ui/core';
+import { Typography, Paper } from '@material-ui/core';
 import { setCategories } from '../redux/categories';
 import { useDispatch, useSelector } from 'react-redux';
 import { ResponsiveBar } from '@nivo/bar';
@@ -8,6 +9,11 @@ import { parseISO } from 'date-fns/esm';
 
 const categoriesWorkerInstance = worker();
 const salesWorkerInstance = worker();
+
+const PaddedPaper = styled(Paper)`
+  padding: 0.8rem;
+  width: 100%;
+`;
 
 const CategoryChart = () => {
   const [workerResult, setWorkerResult] = useState(null);
@@ -21,7 +27,6 @@ const CategoryChart = () => {
   useLayoutEffect(() => {
     const onCategoriesWorker = ({ data }) => {
       data.length !== undefined && dispatch(setCategories(data));
-      console.log(data);
     };
 
     categoriesWorkerInstance.addEventListener('message', onCategoriesWorker);
@@ -57,6 +62,12 @@ const CategoryChart = () => {
     <ResponsiveBar
       theme={{
         textColor: theme === 'dark' ? '#cccccc' : '#333333',
+        tooltip: {
+          container: {
+            background: 'unset',
+            padding: 0,
+          },
+        },
       }}
       data={workerResult}
       keys={['sales']}
@@ -82,9 +93,18 @@ const CategoryChart = () => {
         legendPosition: 'middle',
         legendOffset: -40,
       }}
-      labelSkipWidth={12}
-      labelSkipHeight={12}
-      labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
+      tooltip={(value) => {
+        return (
+          <PaddedPaper>
+            <Typography variant="h6" style={{ width: '100%' }}>
+              {value.data.category}
+            </Typography>
+            <Typography variant="subtitle1">
+              Sales: {value.data.sales}
+            </Typography>
+          </PaddedPaper>
+        );
+      }}
       animate={true}
       motionStiffness={90}
       motionDamping={15}
