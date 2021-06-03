@@ -42,7 +42,6 @@ const CategoryChart = () => {
 
   useLayoutEffect(() => {
     const onSalesWorker = ({ data }) => {
-      console.log(data);
       data.length !== undefined && setWorkerResult(data.filter(Boolean));
     };
 

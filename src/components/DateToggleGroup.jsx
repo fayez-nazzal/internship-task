@@ -35,7 +35,7 @@ const DateToggleGroup = () => {
       }}
     >
       <StyledToggleButton
-        active={dateFilterOption === 'preset'}
+        active={dateFilterOption === 'preset' ? 1 : 0}
         value="preset"
         aria-label="Preset date filters"
       >
@@ -44,7 +44,7 @@ const DateToggleGroup = () => {
         </Typography>
       </StyledToggleButton>
       <StyledToggleButton
-        active={dateFilterOption === 'custom'}
+        active={dateFilterOption === 'custom' ? 1 : 0}
         value="custom"
         aria-label="Custom date filters"
       >

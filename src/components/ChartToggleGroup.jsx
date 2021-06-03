@@ -41,7 +41,7 @@ const ChartToggleGroup = () => {
   return (
     <ToggleButtonGroup exclusive value={currentChart} onChange={handleChange}>
       <StyledToggleButton
-        active={currentChart === 'goods'}
+        active={currentChart === 'goods' ? 1 : 0}
         value="goods"
         aria-label="Unique goods sales"
       >
@@ -50,7 +50,7 @@ const ChartToggleGroup = () => {
         </Typography>
       </StyledToggleButton>
       <StyledToggleButton
-        active={currentChart === 'category'}
+        active={currentChart === 'category' ? 1 : 0}
         value="category"
         aria-label="Category sales"
       >
@@ -59,7 +59,7 @@ const ChartToggleGroup = () => {
         </Typography>
       </StyledToggleButton>
       <StyledToggleButton
-        active={currentChart === 'map'}
+        active={currentChart === 'map' ? 1 : 0}
         value="map"
         aria-label="Total sales geo map"
       >

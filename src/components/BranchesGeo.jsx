@@ -56,8 +56,6 @@ const BranchesGeo = () => {
 
   useLayoutEffect(() => {
     const onSalesWorker = ({ data }) => {
-      console.log(data);
-
       const getData = async () => {
         const branchSalesData = data.data.filter(Boolean);
         breakPoints.current = data.breakPoints;
