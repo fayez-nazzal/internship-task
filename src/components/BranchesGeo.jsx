@@ -118,7 +118,7 @@ const BranchesGeo = () => {
           position={[branch.lat, branch.long]}
         >
           <Popup>
-            {`${branch.name} - ${branch.city}`}{' '}
+            {`${branch.branch} - ${branch.city}`}{' '}
             <p style={{ color: '#ff123a' }}>
               {`Total sales: ${Math.round(branch.sales)}`}
             </p>

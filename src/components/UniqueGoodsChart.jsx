@@ -80,7 +80,7 @@ const UniqueGoodsChart = () => {
         textColor: theme === 'dark' ? '#cccccc' : '#333333',
       }}
       data={workerResult}
-      margin={{ top: 50, right: 130, bottom: 80, left: 60 }}
+      margin={{ top: 50, right: 60, bottom: 80, left: 60 }}
       xScale={{ type: 'time', min: 'auto', max: 'auto', reverse: 'false' }}
       yScale={{
         type: 'point',
